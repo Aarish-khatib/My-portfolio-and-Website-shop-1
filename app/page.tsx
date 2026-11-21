@@ -18,7 +18,6 @@ import {
 } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { HeroSphere } from '@/components/hero-sphere'
-import { CounterStat } from '@/components/counter-stat'
 import { ScrollTree } from '@/components/scroll-tree'
 import { TiltCard } from '@/components/tilt-card'
 import { SectionReveal } from '@/components/section-reveal'
@@ -31,7 +30,6 @@ import {
   CONTACT_DETAILS,
   DELIVERY_PROCESS,
   SHOWCASE_PROJECTS,
-  TESTIMONIALS,
   TRUST_SIGNALS,
   normalizeProject,
   type ShowcaseProject,
@@ -62,12 +60,6 @@ const FALLBACK_SERVICES: Array<{ title: string; description: string; icon: any }
   },
 ]
 
-const HOME_STATS = [
-  { value: 50, suffix: '+', label: 'Projects' },
-  { value: 15, suffix: '+', label: 'Technologies' },
-  { value: 8, suffix: '+', label: 'Certificates' },
-  { value: 12, suffix: '+', label: 'Clients' },
-]
 
 const MagneticButton = ({ children, href }: { children: ReactNode; href: string }) => (
   <Link href={href} passHref>
@@ -342,21 +334,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section-padding relative z-20">
-        <div className="container mx-auto px-4">
-          <SectionReveal className="mb-10 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#f5eadb]">Growth in numbers</p>
-            <h2 className="mt-3 text-3xl font-bold text-white drop-shadow-lg md:text-4xl">Credibility at a glance</h2>
-          </SectionReveal>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-            {HOME_STATS.map((stat, i) => (
-              <SectionReveal key={stat.label} delay={i * 0.08}>
-                <CounterStat value={stat.value} suffix={stat.suffix} label={stat.label} />
-              </SectionReveal>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       <section className="section-padding relative z-20">
         <div className="container mx-auto px-4">
@@ -386,7 +364,7 @@ export default function HomePage() {
           <SectionReveal className="mb-16 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#f5eadb]">Selected work</p>
-              <h2 className="mb-4 mt-3 text-4xl font-bold text-white drop-shadow-lg md:text-5xl">Projects that prove the standard</h2>
+              <h2 className="mb-4 mt-3 text-4xl font-bold text-white drop-shadow-lg md:text-5xl">Explore the projects</h2>
               <p className="font-medium leading-[1.8] text-slate-200">
                 Projects should lead with clear outcomes, strong context, and polished case studies that feel complete and credible.
               </p>
@@ -409,7 +387,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <SectionReveal className="mb-14 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#f5eadb]">Trust layer</p>
-            <h2 className="mt-3 text-4xl font-bold text-white md:text-5xl">Professional signals clients notice immediately</h2>
+            <h2 className="mt-3 text-4xl font-bold text-white md:text-5xl">How I approach project work</h2>
           </SectionReveal>
 
           <div className="grid gap-6 lg:grid-cols-4">
@@ -455,31 +433,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section-padding relative z-20">
-        <div className="container mx-auto px-4">
-          <SectionReveal className="mb-14 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#f5eadb]">Testimonials</p>
-            <h2 className="mt-3 text-4xl font-bold text-white md:text-5xl">Feedback that sounds like real clients</h2>
-          </SectionReveal>
 
-          <div className="grid gap-6 lg:grid-cols-2">
-            {TESTIMONIALS.map((testimonial, index) => (
-              <SectionReveal key={testimonial.name} delay={index * 0.08}>
-                <div className="premium-shell rounded-[28px] p-7">
-                  <div className="mb-6 inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.28em] text-[#f5eadb]">
-                    Client feedback
-                  </div>
-                  <p className="text-lg leading-8 text-slate-100">"{testimonial.quote}"</p>
-                  <div className="mt-6">
-                    <p className="text-base font-semibold text-white">{testimonial.name}</p>
-                    <p className="text-sm text-slate-300">{testimonial.business}</p>
-                  </div>
-                </div>
-              </SectionReveal>
-            ))}
-          </div>
-        </div>
-      </section>
 
       <section className="section-padding relative z-20 pb-8">
         <div className="container mx-auto px-4">
