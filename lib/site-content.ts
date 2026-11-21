@@ -35,27 +35,26 @@ export const NAVIGATION = {
 
 export const TRUST_SIGNALS = [
   {
-    title: 'Fast response',
-    value: 'Under 24 hours',
-    description: 'Clear replies, practical next steps, and no disappearing after the inquiry.',
+    title: 'Open projects',
+    value: 'Explore the source',
+    description: 'Read the public repositories and judge the work from the actual code and documentation.',
   },
   {
-    title: 'Delivery structure',
-    value: '4-step process',
-    description: 'Discovery, design direction, build, and launch support with visible checkpoints.',
+    title: 'Practical process',
+    value: 'Plan, build, check',
+    description: 'I work toward a clear scope, an understandable implementation, and verifiable results.',
   },
   {
-    title: 'Client confidence',
-    value: '12+ clients',
-    description: 'Built for founders, service businesses, and brands that need a sharper digital presence.',
+    title: 'Honest status',
+    value: 'Work in progress',
+    description: 'Features and experiments are labeled according to their actual stage of development.',
   },
   {
-    title: 'Launch support',
-    value: '30-day cover',
-    description: 'Post-launch adjustments, guidance, and bug support after handoff.',
+    title: 'Learning in public',
+    value: 'Continuous improvement',
+    description: 'I use feedback, testing, and iteration to improve software over time.',
   },
 ]
-
 export const DELIVERY_PROCESS = [
   {
     title: 'Discovery',
