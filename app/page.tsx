@@ -18,7 +18,6 @@ import {
 } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { HeroSphere } from '@/components/hero-sphere'
-import { CounterStat } from '@/components/counter-stat'
 import { ScrollTree } from '@/components/scroll-tree'
 import { TiltCard } from '@/components/tilt-card'
 import { SectionReveal } from '@/components/section-reveal'
@@ -30,10 +29,7 @@ import {
   BRAND,
   CONTACT_DETAILS,
   DELIVERY_PROCESS,
-  SHOWCASE_PROJECTS,
-  TESTIMONIALS,
   TRUST_SIGNALS,
-  normalizeProject,
   type ShowcaseProject,
 } from '@/lib/site-content'
 
@@ -62,11 +58,62 @@ const FALLBACK_SERVICES: Array<{ title: string; description: string; icon: any }
   },
 ]
 
-const HOME_STATS = [
-  { value: 50, suffix: '+', label: 'Projects' },
-  { value: 15, suffix: '+', label: 'Technologies' },
-  { value: 8, suffix: '+', label: 'Certificates' },
-  { value: 12, suffix: '+', label: 'Clients' },
+
+const PUBLIC_PROJECTS: ShowcaseProject[] = [
+  {
+    id: 'questpop',
+    slug: 'questpop',
+    title: 'QuestPop',
+    description: 'A playful productivity app that breaks overwhelming goals into practical steps.',
+    longDescription: 'An experiment in smaller goals, focused sessions, and simple progress tracking.',
+    category: 'Web Application',
+    technologies: ['React', 'Vite', 'JavaScript', 'CSS'],
+    status: 'Open source',
+    challenge: 'Make starting a difficult task easier.',
+    solution: 'Generate short quests and offer lightweight progress tracking.',
+    outcome: 'Source code, regression tests, and a CI build workflow are published.',
+    accent: 'from-[#d9d6cd]/60 via-[#b9bbaf]/40 to-[#8c9588]/30',
+    visualLabel: 'Productivity',
+    metrics: ['Goal breakdown', 'Focus timer', 'Local history'],
+    featured: true,
+    liveUrl: 'https://github.com/Aarish-khatib/Questpop',
+  },
+  {
+    id: 'universe',
+    slug: 'universe',
+    title: 'Universe',
+    description: 'An in-development 3D exploration of space and scientific uncertainty.',
+    longDescription: 'An exploratory visualization that separates observations, estimates, and simulation.',
+    category: 'Creative Technology',
+    technologies: ['TypeScript', 'Three.js', 'Vitest'],
+    status: 'In development',
+    challenge: 'Explore immense astronomical scales without confusing simulation and fact.',
+    solution: 'Build a modular workspace for interactive scientific visualization.',
+    outcome: 'The public repository documents its development status and verification commands.',
+    accent: 'from-[#d1d6d2]/60 via-[#aeb8b6]/40 to-[#778884]/30',
+    visualLabel: 'Visualization',
+    metrics: ['3D visualization', 'Modular code', 'Science-first'],
+    featured: true,
+    liveUrl: 'https://github.com/Aarish-khatib/Universe',
+  },
+  {
+    id: 'limitless-ai',
+    slug: 'limitless-ai',
+    title: 'Limitless AI',
+    description: 'A local-first AI and media workspace with multiple providers and editing tools.',
+    longDescription: 'An ambitious software platform for AI workflows and creative artifacts.',
+    category: 'AI Software',
+    technologies: ['React', 'TypeScript', 'Next.js', 'Supabase'],
+    status: 'Feature verification ongoing',
+    challenge: 'Unify useful AI and creative workflows.',
+    solution: 'Provide an extensible local-first interface and provider integration options.',
+    outcome: 'The source repository includes setup and validation instructions; individual features need verification.',
+    accent: 'from-[#ddd9d0]/60 via-[#b6b2aa]/40 to-[#8b8984]/30',
+    visualLabel: 'AI Workspace',
+    metrics: ['Local-first', 'Multi-provider', 'Artifact tools'],
+    featured: true,
+    liveUrl: 'https://github.com/Aarish-khatib/AI',
+  },
 ]
 
 const MagneticButton = ({ children, href }: { children: ReactNode; href: string }) => (
@@ -151,6 +198,16 @@ function ProjectPreviewCard({ project, index }: { project: ShowcaseProject; inde
               <p className="text-xs uppercase tracking-[0.24em] text-brand-accent">Outcome</p>
               <p className="mt-2 text-sm leading-7 text-slate-200">{project.outcome}</p>
             </div>
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white underline underline-offset-4 hover:text-brand-accent"
+              >
+                View public source <ArrowRight className="h-4 w-4" />
+              </a>
+            )}
           </div>
         </motion.div>
       </TiltCard>
@@ -162,7 +219,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true)
   const [heroData, setHeroData] = useState(FALLBACK_HERO)
   const [services, setServices] = useState(FALLBACK_SERVICES)
-  const [projects, setProjects] = useState<ShowcaseProject[]>(SHOWCASE_PROJECTS.slice(0, 3))
+  const projects = PUBLIC_PROJECTS
 
   useEffect(() => {
     const fetchData = async () => {
@@ -170,14 +227,9 @@ export default function HomePage() {
         const [
           { data: configData },
           { data: servicesData, error: servicesError },
-          { data: projectsData, error: projectsError },
         ] = await Promise.all([
           supabase.from('site_config').select('key, value'),
           supabase.from('services').select('name, description').order('order_index', { ascending: true }).limit(3),
-          supabase
-            .from('projects')
-            .select('id, slug, title, description, long_description, category, technologies, featured, live_url')
-            .order('order_index', { ascending: true }),
         ])
 
         const config: Record<string, string> =
@@ -202,13 +254,6 @@ export default function HomePage() {
           )
         }
 
-        if (!projectsError && projectsData?.length) {
-          const normalized = projectsData.map((project, index) => normalizeProject(project, index))
-          const featured = normalized.filter((project) => project.featured).slice(0, 3)
-          setProjects((featured.length ? featured : normalized).slice(0, 3))
-        } else if (projectsError) {
-          console.warn('Using fallback homepage projects.', projectsError)
-        }
 
         if (servicesError) {
           console.warn('Using fallback homepage services.', servicesError)
@@ -217,7 +262,6 @@ export default function HomePage() {
         console.warn('Using fallback homepage content.', error)
         setHeroData(FALLBACK_HERO)
         setServices(FALLBACK_SERVICES)
-        setProjects(SHOWCASE_PROJECTS.slice(0, 3))
       } finally {
         setLoading(false)
       }
@@ -342,21 +386,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section-padding relative z-20">
-        <div className="container mx-auto px-4">
-          <SectionReveal className="mb-10 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#f5eadb]">Growth in numbers</p>
-            <h2 className="mt-3 text-3xl font-bold text-white drop-shadow-lg md:text-4xl">Credibility at a glance</h2>
-          </SectionReveal>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-            {HOME_STATS.map((stat, i) => (
-              <SectionReveal key={stat.label} delay={i * 0.08}>
-                <CounterStat value={stat.value} suffix={stat.suffix} label={stat.label} />
-              </SectionReveal>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       <section className="section-padding relative z-20">
         <div className="container mx-auto px-4">
@@ -386,7 +416,7 @@ export default function HomePage() {
           <SectionReveal className="mb-16 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#f5eadb]">Selected work</p>
-              <h2 className="mb-4 mt-3 text-4xl font-bold text-white drop-shadow-lg md:text-5xl">Projects that prove the standard</h2>
+              <h2 className="mb-4 mt-3 text-4xl font-bold text-white drop-shadow-lg md:text-5xl">Explore the projects</h2>
               <p className="font-medium leading-[1.8] text-slate-200">
                 Projects should lead with clear outcomes, strong context, and polished case studies that feel complete and credible.
               </p>
@@ -409,7 +439,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <SectionReveal className="mb-14 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#f5eadb]">Trust layer</p>
-            <h2 className="mt-3 text-4xl font-bold text-white md:text-5xl">Professional signals clients notice immediately</h2>
+            <h2 className="mt-3 text-4xl font-bold text-white md:text-5xl">How I approach project work</h2>
           </SectionReveal>
 
           <div className="grid gap-6 lg:grid-cols-4">
@@ -455,31 +485,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section-padding relative z-20">
-        <div className="container mx-auto px-4">
-          <SectionReveal className="mb-14 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#f5eadb]">Testimonials</p>
-            <h2 className="mt-3 text-4xl font-bold text-white md:text-5xl">Feedback that sounds like real clients</h2>
-          </SectionReveal>
 
-          <div className="grid gap-6 lg:grid-cols-2">
-            {TESTIMONIALS.map((testimonial, index) => (
-              <SectionReveal key={testimonial.name} delay={index * 0.08}>
-                <div className="premium-shell rounded-[28px] p-7">
-                  <div className="mb-6 inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.28em] text-[#f5eadb]">
-                    Client feedback
-                  </div>
-                  <p className="text-lg leading-8 text-slate-100">"{testimonial.quote}"</p>
-                  <div className="mt-6">
-                    <p className="text-base font-semibold text-white">{testimonial.name}</p>
-                    <p className="text-sm text-slate-300">{testimonial.business}</p>
-                  </div>
-                </div>
-              </SectionReveal>
-            ))}
-          </div>
-        </div>
-      </section>
 
       <section className="section-padding relative z-20 pb-8">
         <div className="container mx-auto px-4">
