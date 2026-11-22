@@ -33,9 +33,11 @@ function ProjectCard({
         <motion.button
           type="button"
           onClick={onSelect}
+          aria-pressed={isActive}
+          aria-label={`View details for ${project.title}`}
           whileHover={{ y: -6 }}
           whileTap={{ scale: 0.98 }}
-          className={`premium-shell group relative flex h-full w-full flex-col rounded-[28px] p-5 text-left transition-all ${
+          className={`premium-shell group relative flex h-full w-full flex-col rounded-[28px] p-5 text-left transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-accent ${
             isActive ? 'border-brand-accent/30 shadow-[0_0_0_1px_rgba(121,224,255,0.18)]' : ''
           }`}
         >
@@ -287,8 +289,10 @@ export default function ProjectsPage() {
               {categories.map((category) => (
                 <button
                   key={category}
+                  type="button"
                   onClick={() => setActiveCategory(category)}
-                  className={`rounded-full border px-6 py-2 text-sm font-medium transition-all ${
+                  aria-pressed={activeCategory === category}
+                  className={`rounded-full border px-6 py-2 text-sm font-medium transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-accent ${
                     activeCategory === category
                       ? 'brand-pill-active'
                       : 'border-white/10 bg-brand-surface text-slate-200 hover:text-white'
