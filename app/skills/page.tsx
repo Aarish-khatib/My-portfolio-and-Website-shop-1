@@ -9,63 +9,60 @@ import { use3DDepth } from '@/hooks/use3DDepth'
 import { LineWaves } from '@/components/line-waves'
 import { ParticleWaves } from '@/components/particle-waves'
 
-// Skill data
+// Topics and technologies explored in projects. This is not a proficiency rating.
 const skillCategories = [
   {
-    category: 'Frontend',
+    category: 'Web Applications',
     skills: [
-      { name: 'React', level: 95, color: '#61DAFB' },
-      { name: 'Next.js', level: 92, color: '#ffffff' },
-      { name: 'TypeScript', level: 90, color: '#3178C6' },
-      { name: 'Tailwind CSS', level: 95, color: '#06B6D4' },
-      { name: 'Framer Motion', level: 88, color: '#FF0050' },
-      { name: 'Three.js', level: 85, color: '#000000' },
+      { name: 'React', color: '#61DAFB' },
+      { name: 'Next.js', color: '#ffffff' },
+      { name: 'TypeScript', color: '#3178C6' },
+      { name: 'Vite', color: '#8E75B2' },
     ],
   },
   {
-    category: 'Backend',
+    category: 'AI and Agents',
     skills: [
-      { name: 'Node.js', level: 88, color: '#339933' },
-      { name: 'Python', level: 85, color: '#3776AB' },
-      { name: 'PostgreSQL', level: 88, color: '#336791' },
-      { name: 'Supabase', level: 90, color: '#3ECF8E' },
-      { name: 'REST APIs', level: 92, color: '#00D4FF' },
+      { name: 'AI model APIs', color: '#A8B5A2' },
+      { name: 'Agent orchestration', color: '#B6A284' },
+      { name: 'Local language models', color: '#80A7A3' },
+      { name: 'Memory systems', color: '#A0A7C0' },
     ],
   },
   {
-    category: 'Finance',
+    category: 'Python and Data',
     skills: [
-      { name: 'Crypto Trading', level: 85, color: '#F7931A' },
-      { name: 'Forex', level: 80, color: '#00D4FF' },
-      { name: 'Stock Market', level: 82, color: '#00C853' },
-      { name: 'Technical Analysis', level: 85, color: '#7C3AED' },
+      { name: 'Python', color: '#3776AB' },
+      { name: 'Streamlit', color: '#D17473' },
+      { name: 'Supabase', color: '#3ECF8E' },
+      { name: 'ML experimentation', color: '#A38CB0' },
     ],
   },
   {
-    category: 'AI & Automation',
+    category: 'Creative Technology',
     skills: [
-      { name: 'ChatGPT/GPT-4', level: 90, color: '#10A37F' },
-      { name: 'Claude', level: 88, color: '#CC785C' },
-      { name: 'Prompt Engineering', level: 92, color: '#FF6B6B' },
-      { name: 'API Integration', level: 90, color: '#00D4FF' },
+      { name: 'Three.js', color: '#B0B0B0' },
+      { name: '3D visualization', color: '#8BA4B3' },
+      { name: 'Interactive simulations', color: '#B0A388' },
+      { name: 'Game systems', color: '#95AF98' },
     ],
   },
   {
-    category: 'Tools & Platforms',
+    category: 'Tools and Workflows',
     skills: [
-      { name: 'Git/GitHub', level: 90, color: '#181717' },
-      { name: 'Vercel', level: 92, color: '#ffffff' },
-      { name: 'Linux/Server', level: 80, color: '#FCC624' },
-      { name: 'Figma', level: 85, color: '#F24E1E' },
+      { name: 'Git and GitHub', color: '#B6B6B6' },
+      { name: 'Vercel', color: '#ffffff' },
+      { name: 'PowerShell', color: '#8EABD2' },
+      { name: 'API integrations', color: '#96A8A6' },
     ],
   },
   {
-    category: 'Soft Skills',
+    category: 'Engineering Practices',
     skills: [
-      { name: 'Public Speaking', level: 90, color: '#FF6B6B' },
-      { name: 'Problem Solving', level: 95, color: '#00D4FF' },
-      { name: 'Multitasking', level: 88, color: '#7C3AED' },
-      { name: 'Communication', level: 90, color: '#10B981' },
+      { name: 'Testing and CI', color: '#9CB9A9' },
+      { name: 'Documentation', color: '#B5A58E' },
+      { name: 'Privacy and safety', color: '#A5B4B7' },
+      { name: 'Iterative development', color: '#B9AAAB' },
     ],
   },
 ]
@@ -119,7 +116,7 @@ function SkillGalaxyScene() {
 }
 
 // Skill orbit visualization with 3D depth
-function SkillOrbit({ skills }: { skills: { name: string; level: number; color: string }[] }) {
+function SkillOrbit({ skills }: { skills: { name: string; color: string }[] }) {
   const depth = use3DDepth(0.3)
 
   return (
@@ -156,7 +153,7 @@ function SkillOrbit({ skills }: { skills: { name: string; level: number; color: 
       {/* Skills as orbiting dots with 3D depth */}
       {skills.map((skill, i) => {
         const angle = (i / skills.length) * Math.PI * 2
-        const radius = (skill.level / 100) * 45 + 5 // percentage to radius
+        const radius = 33 // decorative, equal-distance placement; not a rating
         const x = Math.cos(angle) * radius + 50
         const y = Math.sin(angle) * radius + 50
 
@@ -188,7 +185,7 @@ function SkillOrbit({ skills }: { skills: { name: string; level: number; color: 
               className="absolute left-full ml-2 whitespace-nowrap z-10 pointer-events-none"
             >
               <span className="text-sm text-white bg-cosmic-deep/95 px-2 py-1 rounded border border-white/10">
-                {skill.name} ({skill.level}%)
+                {skill.name}
               </span>
             </motion.div>
           </motion.div>
@@ -199,7 +196,7 @@ function SkillOrbit({ skills }: { skills: { name: string; level: number; color: 
 }
 
 // Skill card with 3D parallax effect
-function SkillCard({ skill, index }: { skill: { name: string; level: number; color: string }; index: number }) {
+function SkillCard({ skill, index }: { skill: { name: string; color: string }; index: number }) {
   const depth = use3DDepth(0.4)
   const [isHovered, setIsHovered] = useState(false)
 
@@ -216,21 +213,7 @@ function SkillCard({ skill, index }: { skill: { name: string; level: number; col
       >
         <div className="flex items-center justify-between mb-2">
           <span className="text-white font-medium">{skill.name}</span>
-          <span className="text-sm text-slate-300">{skill.level}%</span>
-        </div>
-
-        {/* Skill level bar with glow */}
-        <div className="relative h-2 w-full overflow-hidden rounded-full bg-[#111a2f]">
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: `${skill.level}%` }}
-            transition={{ delay: index * 0.05 + 0.3, duration: 0.8 }}
-            className="h-full rounded-full"
-            style={{
-              background: `linear-gradient(90deg, ${skill.color}, ${skill.color}88)`,
-              boxShadow: isHovered ? `0 0 15px ${skill.color}` : 'none',
-            }}
-          />
+          <span className="text-xs text-slate-300">Exploring</span>
         </div>
 
         {/* Hover glow effect */}
@@ -247,7 +230,7 @@ function SkillCard({ skill, index }: { skill: { name: string; level: number; col
 }
 
 // Category section
-function CategorySection({ category, skills, index }: { category: string; skills: { name: string; level: number; color: string }[]; index: number }) {
+function CategorySection({ category, skills, index }: { category: string; skills: { name: string; color: string }[]; index: number }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
@@ -304,15 +287,15 @@ export default function SkillsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <span className="text-cosmic-accent font-medium tracking-widest uppercase text-sm">My Expertise</span>
+            <span className="text-cosmic-accent font-medium tracking-widest uppercase text-sm">Technology Interests</span>
             <h1 className="text-5xl md:text-7xl font-display font-bold mt-4 mb-6">
               <span className="text-white">Skills</span>
               <br />
               <span className="text-gradient-animated">Galaxy</span>
             </h1>
             <p className="mx-auto max-w-2xl text-lg font-medium leading-[1.8] text-slate-200">
-              Each skill is a star in my universe. Explore the constellations
-              of technologies and expertise I've developed over the years.
+              A look at the technologies and ideas I have explored through
+              software projects, experiments, and ongoing learning.
             </p>
           </motion.div>
         </div>
@@ -336,7 +319,7 @@ export default function SkillsPage() {
               Skill <span className="text-gradient">Orbits</span>
             </h2>
             <p className="mx-auto max-w-xl font-medium leading-[1.8] text-slate-200">
-              Distance from center represents proficiency level. Hover to see details.
+              Orbits are a visual index of interests, not scores or proficiency rankings. Hover to explore.
             </p>
           </div>
 
@@ -366,10 +349,10 @@ export default function SkillsPage() {
         <div className="container mx-auto px-4">
           <div className="glass-card p-12 text-center max-w-2xl mx-auto">
             <h2 className="text-3xl font-display font-bold text-white mb-4">
-              Ready to Put These Skills to <span className="text-gradient">Work</span>?
+              Interested in Building <span className="text-gradient">Together</span>?
             </h2>
             <p className="mb-8 font-medium leading-[1.8] text-slate-200">
-              Let's collaborate on your next project.
+              Explore the projects or get in touch to discuss an idea.
             </p>
             <motion.a
               href="/store"
