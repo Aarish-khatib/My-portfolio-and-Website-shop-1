@@ -284,17 +284,6 @@ export default function HomePage() {
               <a href={CONTACT_DETAILS.emailHref} className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4 text-sm text-slate-100 transition-all hover:border-brand-accent/30 hover:text-white">
                 Email
               </a>
-              <a href={CONTACT_DETAILS.phoneHref} className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4 text-sm text-slate-100 transition-all hover:border-brand-accent/30 hover:text-white">
-                Call
-              </a>
-              <a
-                href={CONTACT_DETAILS.whatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4 text-sm text-slate-100 transition-all hover:border-brand-accent/30 hover:text-white"
-              >
-                WhatsApp
-              </a>
             </div>
 
             <div className="flex flex-wrap gap-4">
