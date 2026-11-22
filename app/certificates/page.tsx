@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import { supabase } from '@/lib/supabase'
 import { AlertCircle, Award, Building2, Calendar, ExternalLink, Loader2, X } from 'lucide-react'
 import { Card3DParallax } from '@/components/3d-parallax-card'
-import { CERTIFICATE_FALLBACKS } from '@/lib/site-content'
 
 const certificateAccents = [
   'from-[#f5eee4]/70 via-[#dccab1]/42 to-[#bba999]/34',
@@ -118,16 +117,18 @@ export default function CertificatesPage() {
         const { data, error } = await supabase.from('certificates').select('*').order('issue_date', { ascending: false })
 
         if (error) {
-          console.warn('Failed to fetch certificates, using fallback data.', error)
-          setCertificates(CERTIFICATE_FALLBACKS)
-        } else if (data?.length) {
-          setCertificates(data)
+          console.warn('Unable to load certificate records.', error)
+          setError('Certificate records could not be loaded. Please try again later.')
+          setCertificates([])
         } else {
-          setCertificates(CERTIFICATE_FALLBACKS)
+          // Never invent fallback credentials when the database is empty.
+          setCertificates(Array.isArray(data) ? data : [])
+          setError(null)
         }
       } catch (err) {
-        console.warn('Using fallback certificates.', err)
-        setCertificates(CERTIFICATE_FALLBACKS)
+        console.warn('Unable to load certificate records.', err)
+        setError('Certificate records could not be loaded. Please try again later.')
+        setCertificates([])
       } finally {
         setLoading(false)
       }
@@ -146,7 +147,7 @@ export default function CertificatesPage() {
           </div>
           <h1 className="mb-6 mt-5 text-5xl font-display font-bold text-white drop-shadow-lg md:text-7xl">Certificates</h1>
           <p className="mx-auto max-w-2xl text-lg font-medium leading-[1.8] text-slate-200">
-            A professional credentials section built for clarity, credibility, and confident presentation.
+            Only credentials recorded for this portfolio are displayed here. No sample certificates or claimed achievements are substituted.
           </p>
         </motion.div>
 
@@ -158,19 +159,25 @@ export default function CertificatesPage() {
 
         {loading ? (
           <div className="flex h-64 items-center justify-center"><Loader2 className="h-12 w-12 animate-spin" /></div>
-        ) : (
+        ) : certificates.length > 0 ? (
           <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2 lg:grid-cols-3">
             {certificates.map((certificate, index) => (
               <CertificateCard key={certificate.id} certificate={certificate} onClick={() => setSelected(certificate)} index={index} />
             ))}
           </div>
-        )}
-
-        <div className="mx-auto mt-20 grid max-w-4xl gap-8 text-center md:grid-cols-3">
-          <div className="glass-card p-8"><div className="mb-2 text-4xl font-bold text-white">8+</div><div className="text-slate-200">Certificates</div></div>
-          <div className="glass-card p-8"><div className="mb-2 text-4xl font-bold text-white">100+</div><div className="text-slate-200">Hours of Training</div></div>
-          <div className="glass-card p-8"><div className="mb-2 text-4xl font-bold text-white">Ongoing</div><div className="text-slate-200">Commitment to Growth</div></div>
-        </div>
+        ) : !error ? (
+          <div className="premium-shell mx-auto max-w-xl rounded-[24px] p-8 text-center">
+            <Award className="mx-auto mb-4 h-8 w-8 text-brand-accent" aria-hidden="true" />
+            <h2 className="text-2xl font-semibold text-white">No credentials listed yet</h2>
+            <p className="mt-3 text-sm leading-7 text-slate-200">
+              This page will show actual certificates when they are added. In the meantime,
+              explore the published projects to see what I am building.
+            </p>
+            <a href="/projects" className="mt-5 inline-block font-medium text-brand-accent underline">
+              Explore projects
+            </a>
+          </div>
+        ) : null}
       </div>
 
       {selected && <CertificateModal certificate={selected} onClose={() => setSelected(null)} />}
