@@ -2,12 +2,10 @@
 
 import { useRef } from 'react'
 import { motion, useInView, useScroll, useTransform } from 'framer-motion'
-import { Code, TrendingUp, Bot, Globe, Target, Rocket, Lightbulb, Heart, Award, Users } from 'lucide-react'
+import { Code, Bot, Globe, Target, Rocket, Lightbulb, Heart, Users } from 'lucide-react'
 import { Particles3DVisualization } from '@/components/particles-3d-visualization'
 import { Card3DParallax } from '@/components/3d-parallax-card'
-import { use3DDepth } from '@/hooks/use3DDepth'
 import { LineWaves } from '@/components/line-waves'
-import { GradientOrb } from '@/components/gradient-orb'
 
 // Animated reveal section
 function RevealSection({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
@@ -59,40 +57,6 @@ function GlassCard({ children, className = '' }: { children: React.ReactNode; cl
     >
       {children}
     </div>
-  )
-}
-
-// Timeline milestone
-function TimelineMilestone({ year, title, description, icon: Icon, isLeft = true }: {
-  year: string
-  title: string
-  description: string
-  icon: React.ElementType
-  isLeft?: boolean
-}) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
-      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: isLeft ? -50 : 50 }}
-      transition={{ duration: 0.6 }}
-      className={`flex items-center gap-6 ${isLeft ? 'flex-row' : 'flex-row-reverse'} ${isLeft ? 'text-right' : 'text-left'}`}
-    >
-      <div className={`flex-1 ${isLeft ? 'text-right' : 'text-left'}`}>
-        <span className="text-cosmic-accent font-display font-bold text-lg">{year}</span>
-        <h3 className="text-2xl font-display font-semibold text-white mt-2">{title}</h3>
-        <p className="mt-2 font-medium leading-[1.8] text-slate-200">{description}</p>
-      </div>
-
-      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-cosmic-accent to-cosmic-glow flex items-center justify-center z-10 shrink-0">
-        <Icon className="w-8 h-8 text-white" />
-      </div>
-
-      <div className="flex-1" />
-    </motion.div>
   )
 }
 
@@ -152,8 +116,8 @@ export default function AboutPage() {
               <span className="text-white drop-shadow-lg">The Code</span>
             </h1>
             <p className="mx-auto max-w-2xl text-lg font-medium leading-8 text-slate-200 md:text-xl">
-              A passionate developer, trader, and AI enthusiast on a mission to create
-              digital experiences that inspire and transform.
+              I'm Aarish, a student exploring AI systems, full-stack applications,
+              automation, and creative software through practical projects.
             </p>
           </motion.div>
         </motion.div>
@@ -223,41 +187,26 @@ export default function AboutPage() {
             <RevealSection delay={0.2}>
               <div className="glass-card p-7 md:p-8">
               <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6 tracking-tight">
-                Hello, I'm <span className="text-white drop-shadow-lg">Aarish Khatib</span>
+                Hello, I'm <span className="text-white drop-shadow-lg">Aarish</span>
               </h2>
               <div className="space-y-5 font-medium leading-8 text-slate-200">
                 <p>
-                  I'm a creative developer and digital architect passionate about building
-                  experiences that push the boundaries of what's possible on the web.
+                  I build and experiment with web applications, AI tools, and
+                  automation workflows. I use software projects to learn how
+                  interfaces, models, and systems fit together.
                 </p>
                 <p>
-                  My journey into technology began with a curiosity for how things work.
-                  What started as simple HTML experiments evolved into a deep passion for
-                  creating beautiful, functional, and impactful digital solutions.
+                  My public projects include QuestPop, a productivity app;
+                  Universe, an in-development visualization of space; and
+                  Limitless AI, a multi-provider AI workspace.
                 </p>
                 <p>
-                  Beyond coding, I have immersed myself in the world of trading, exploring
-                  cryptocurrency markets, forex, and Indian stock markets. This unique
-                  combination of technical skills and financial acumen allows me to build
-                  sophisticated trading systems and analytics tools.
+                  Some ideas are experiments, and some features are still in
+                  development. I aim to document those differences clearly,
+                  test what I build, and improve it through iteration.
                 </p>
               </div>
 
-              {/* Quick stats */}
-              <div className="grid grid-cols-3 gap-4 mt-8">
-                <div className="text-center rounded-xl border border-white/10 bg-[#0d1528] p-4 shadow-2xl">
-                  <div className="text-2xl font-bold text-white drop-shadow-lg">50+</div>
-                  <div className="text-sm font-medium text-slate-300">Projects</div>
-                </div>
-                <div className="text-center rounded-xl border border-white/10 bg-[#0d1528] p-4 shadow-2xl">
-                  <div className="text-2xl font-bold text-white drop-shadow-lg">3+</div>
-                  <div className="text-sm font-medium text-slate-300">Years</div>
-                </div>
-                <div className="text-center rounded-xl border border-white/10 bg-[#0d1528] p-4 shadow-2xl">
-                  <div className="text-2xl font-bold text-white drop-shadow-lg">100%</div>
-                  <div className="text-sm font-medium text-slate-300">Dedication</div>
-                </div>
-              </div>
               </div>
             </RevealSection>
           </div>
@@ -270,7 +219,7 @@ export default function AboutPage() {
           <RevealSection className="text-center mb-16">
             <span className="text-cosmic-accent font-medium tracking-widest uppercase text-sm">What I Do</span>
             <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 text-white">
-              Areas of <span className="text-white drop-shadow-lg">Expertise</span>
+              Areas I'm <span className="text-white drop-shadow-lg">Exploring</span>
             </h2>
           </RevealSection>
 
@@ -279,15 +228,15 @@ export default function AboutPage() {
               <Code className="w-10 h-10 text-cosmic-accent mb-4" />
               <h3 className="text-xl font-display font-semibold text-white mb-3">Web Development</h3>
               <p className="text-sm font-medium leading-[1.8] text-slate-200">
-                Full-stack development with React, Next.js, and modern technologies
+                Building practical apps and experimenting with React, Next.js, and web tooling
               </p>
             </GlassCard>
 
             <GlassCard>
-              <TrendingUp className="w-10 h-10 text-cosmic-accent mb-4" />
-              <h3 className="text-xl font-display font-semibold text-white mb-3">Trading</h3>
+              <Target className="w-10 h-10 text-cosmic-accent mb-4" />
+              <h3 className="text-xl font-display font-semibold text-white mb-3">Local AI &amp; Automation</h3>
               <p className="text-sm font-medium leading-[1.8] text-slate-200">
-                Crypto, Forex, and Indian stock market trading and automation
+                Exploring agent workflows, memory systems, and resource-aware local models
               </p>
             </GlassCard>
 
@@ -295,7 +244,7 @@ export default function AboutPage() {
               <Bot className="w-10 h-10 text-cosmic-accent mb-4" />
               <h3 className="text-xl font-display font-semibold text-white mb-3">AI Integration</h3>
               <p className="text-sm font-medium leading-[1.8] text-slate-200">
-                Building intelligent systems with ChatGPT, Claude, and ML APIs
+                Experimenting with model APIs, provider routing, and useful AI features
               </p>
             </GlassCard>
 
@@ -303,7 +252,7 @@ export default function AboutPage() {
               <Globe className="w-10 h-10 text-cosmic-accent mb-4" />
               <h3 className="text-xl font-display font-semibold text-white mb-3">Digital Strategy</h3>
               <p className="text-sm font-medium leading-[1.8] text-slate-200">
-                SEO, performance optimization, and scalable architecture
+                Learning to improve UX, performance, and maintainable software design
               </p>
             </GlassCard>
           </div>
@@ -340,54 +289,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Timeline Section */}
-      <section className="section-padding bg-gradient-to-b from-cosmic-void via-cosmic-deep/30 to-cosmic-void">
-        <div className="container mx-auto px-4">
-          <RevealSection className="text-center mb-16">
-            <span className="text-cosmic-accent font-medium tracking-widest uppercase text-sm">The Journey</span>
-            <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 text-white">
-              Key <span className="text-white drop-shadow-lg">Milestones</span>
-            </h2>
-          </RevealSection>
-
-          <div className="relative max-w-3xl mx-auto">
-            {/* Vertical line */}
-            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-cosmic-accent via-cosmic-glow to-transparent hidden md:block" />
-
-            <div className="space-y-16">
-              <TimelineMilestone
-                year="2023"
-                title="Programming Journey Begins"
-                description="Started learning Python and JavaScript, building first projects"
-                icon={Code}
-                isLeft={true}
-              />
-              <TimelineMilestone
-                year="2024"
-                title="Trading & AI Exploration"
-                description="Dove into crypto trading and began experimenting with AI tools"
-                icon={TrendingUp}
-                isLeft={false}
-              />
-              <TimelineMilestone
-                year="2025"
-                title="Certifications & Growth"
-                description="Earned multiple certifications and expanded professional skillset"
-                icon={Award}
-                isLeft={true}
-              />
-              <TimelineMilestone
-                year="2026"
-                title="Professional Developer"
-                description="Building premium digital experiences for clients worldwide"
-                icon={Rocket}
-                isLeft={false}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Vision Section */}
       <section className="section-padding">
         <div className="container mx-auto px-4">
@@ -397,10 +298,9 @@ export default function AboutPage() {
               Looking <span className="text-white drop-shadow-lg">Ahead</span>
             </h2>
             <p className="mx-auto mb-8 max-w-2xl text-lg font-medium leading-8 text-slate-200">
-              My vision is to continue pushing the boundaries of web development,
-              building AI-powered solutions, and helping businesses transform
-              their digital presence. Every project is an opportunity to create
-              something meaningful.
+              I want to keep building reliable software, learn from real users, and
+              make useful AI and web tools. Each project is an opportunity to
+              test an idea, share what works, and improve what does not.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <div className="rounded-full border border-white/15 bg-[#0d1528] px-6 py-3 text-slate-100">
