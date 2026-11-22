@@ -11,10 +11,10 @@ import { TiltCard } from '@/components/tilt-card'
 import { LineWaves } from '@/components/line-waves'
 import { GlowText } from '@/components/glow-text'
 import {
-  SHOWCASE_PROJECTS,
   normalizeProject,
   type ShowcaseProject,
 } from '@/lib/site-content'
+import { PUBLIC_PROJECTS } from '@/lib/public-projects'
 
 function ProjectCard({
   project,
@@ -94,11 +94,11 @@ function ProjectCard({
 }
 
 export default function ProjectsPage() {
-  const [projects, setProjects] = useState<ShowcaseProject[]>(SHOWCASE_PROJECTS)
+  const [projects, setProjects] = useState<ShowcaseProject[]>(PUBLIC_PROJECTS)
   const [loading, setLoading] = useState(true)
   const [usingFallback, setUsingFallback] = useState(false)
   const [activeCategory, setActiveCategory] = useState('All')
-  const [selectedProject, setSelectedProject] = useState<ShowcaseProject>(SHOWCASE_PROJECTS[0])
+  const [selectedProject, setSelectedProject] = useState<ShowcaseProject>(PUBLIC_PROJECTS[0])
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -109,8 +109,8 @@ export default function ProjectsPage() {
           .order('order_index', { ascending: true })
 
         if (error || !data?.length) {
-          setProjects(SHOWCASE_PROJECTS)
-          setSelectedProject(SHOWCASE_PROJECTS[0])
+          setProjects(PUBLIC_PROJECTS)
+          setSelectedProject(PUBLIC_PROJECTS[0])
           setUsingFallback(true)
         } else {
           const normalized = data.map((project, index) => normalizeProject(project, index))
@@ -120,8 +120,8 @@ export default function ProjectsPage() {
         }
       } catch (error) {
         console.warn('Using fallback projects page data.', error)
-        setProjects(SHOWCASE_PROJECTS)
-        setSelectedProject(SHOWCASE_PROJECTS[0])
+        setProjects(PUBLIC_PROJECTS)
+        setSelectedProject(PUBLIC_PROJECTS[0])
         setUsingFallback(true)
       } finally {
         setLoading(false)
@@ -185,7 +185,7 @@ export default function ProjectsPage() {
 
         {usingFallback && !loading && (
           <div className="premium-shell mb-10 rounded-[28px] px-5 py-4 text-center text-sm text-slate-200">
-            The live project database is currently empty, so the portfolio is using curated case studies based on the services and work style already presented across the site.
+            The live project database is unavailable or empty, so these are real public projects linked to their GitHub source repositories.
           </div>
         )}
 
@@ -269,7 +269,7 @@ export default function ProjectsPage() {
                             rel="noopener noreferrer"
                             className="btn-secondary !px-5 !py-3 text-sm"
                           >
-                            Visit Live Project
+                            Open Project
                           </a>
                         ) : (
                           <Link href="/contact" className="btn-secondary !px-5 !py-3 text-sm">
@@ -317,7 +317,7 @@ export default function ProjectsPage() {
                   { label: 'Portfolio depth', value: `${projects.length} curated projects` },
                   { label: 'Case study coverage', value: 'Challenge, solution, outcome' },
                   { label: 'Presentation quality', value: '3D cards and hover motion' },
-                  { label: 'Client readiness', value: 'Real contact path on every featured CTA' },
+                  { label: 'Project evidence', value: 'Public source available for the featured repositories' },
                 ].map((item) => (
                   <div key={item.label} className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
                     <p className="text-lg font-semibold text-white">{item.value}</p>
