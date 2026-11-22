@@ -262,45 +262,6 @@ export const SHOWCASE_PROJECTS: ShowcaseProject[] = [
   },
 ]
 
-export const CERTIFICATE_FALLBACKS = [
-  {
-    id: 'cert-chatgpt',
-    title: 'ChatGPT and AI Tools Workshop',
-    issuing_organization: 'Professional Skills Program',
-    issue_date: '2025-03-14',
-    description: 'Applied training focused on practical AI workflows, prompting, and business implementation.',
-    image_url: '',
-    credential_url: '',
-  },
-  {
-    id: 'cert-public-speaking',
-    title: 'Public Speaking Certification',
-    issuing_organization: 'Communication Skills Institute',
-    issue_date: '2025-05-06',
-    description: 'Training in presentation confidence, structured communication, and audience clarity.',
-    image_url: '',
-    credential_url: '',
-  },
-  {
-    id: 'cert-multitasking',
-    title: 'Multitasking Excellence Course',
-    issuing_organization: 'Productivity Development Academy',
-    issue_date: '2025-07-19',
-    description: 'Focused on workflow discipline, execution consistency, and high-ownership delivery habits.',
-    image_url: '',
-    credential_url: '',
-  },
-  {
-    id: 'cert-react',
-    title: 'Advanced React Development',
-    issuing_organization: 'Frontend Engineering Program',
-    issue_date: '2025-10-02',
-    description: 'Advanced frontend development training for scalable interfaces and production-ready architecture.',
-    image_url: '',
-    credential_url: '',
-  },
-]
-
 export function normalizeProject(project: Record<string, any>, index = 0): ShowcaseProject {
   const fallback = SHOWCASE_PROJECTS[index % SHOWCASE_PROJECTS.length]
 
