@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
@@ -20,6 +20,14 @@ import {
 const AUTH_COOLDOWN_MS = 4000
 
 export default function AuthPage() {
+  return (
+    <Suspense fallback={<p className="mx-auto max-w-md px-6 py-24" role="status">Loading sign-in…</p>}>
+      <AuthForm />
+    </Suspense>
+  )
+}
+
+function AuthForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { user, isAdmin, isLoading: authLoading, refreshProfile } = useAuth()

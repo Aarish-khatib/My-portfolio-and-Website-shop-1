@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowRight, CheckCircle2, Loader2, Sparkles, Wand2 } from 'lucide-react'
-import { supabase } from '@/lib/supabase'
+import { hasSupabaseConfig, supabase } from '@/lib/supabase'
 import { PageHeader } from '@/components/page-header'
 import { SectionReveal } from '@/components/section-reveal'
 import { TiltCard } from '@/components/tilt-card'
@@ -97,12 +97,14 @@ function ProjectCard({
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<ShowcaseProject[]>(PUBLIC_PROJECTS)
-  const [loading, setLoading] = useState(true)
-  const [usingFallback, setUsingFallback] = useState(false)
+  const [loading, setLoading] = useState(hasSupabaseConfig)
+  const [usingFallback, setUsingFallback] = useState(!hasSupabaseConfig)
   const [activeCategory, setActiveCategory] = useState('All')
   const [selectedProject, setSelectedProject] = useState<ShowcaseProject>(PUBLIC_PROJECTS[0])
 
   useEffect(() => {
+    if (!hasSupabaseConfig) return
+
     const fetchProjects = async () => {
       try {
         const { data, error } = await supabase
