@@ -12,7 +12,7 @@ A Next.js website for presenting software projects and experiments, explaining w
 
 ## Technology
 
-- Next.js 13, React, TypeScript, Tailwind CSS
+- Next.js 15, React, TypeScript, Tailwind CSS
 - Framer Motion, Three.js, UI component libraries
 - Optional Supabase-backed data for selected site features
 

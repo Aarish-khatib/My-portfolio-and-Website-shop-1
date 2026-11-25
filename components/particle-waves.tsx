@@ -34,7 +34,7 @@ export function ParticleWaves({
     angle: number
   }>>([])
   const timeRef = useRef(0)
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number | undefined>(undefined)
 
   useEffect(() => {
     const canvas = canvasRef.current
